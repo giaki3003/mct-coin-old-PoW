@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=MCT
+Comment=MCT P2P Cryptocurrency
+Comment[fr]=MCT, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=MCT, eşten eşe kriptografik sanal para birimi
+Exec=mct-qt %u
+Terminal=false
+Type=Application
+Icon=mct128
+MimeType=x-scheme-handler/mct;
+Categories=Office;Finance;
