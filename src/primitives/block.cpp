@@ -11,12 +11,22 @@
 #include "crypto/common.h"
 #include "crypto/Lyra2.h"
 #include "crypto/Lyra2Z.h"
+#include "coins.h"
 
 uint256 CBlockHeader::GetHash() const
 {
     uint256 thash;
     lyra2z_hash(BEGIN(nVersion), BEGIN(thash));
     return thash;
+}
+
+bool CBlock::IsProofOfStake() const
+{
+    return (vtx.size() > 1 && vtx[1]->IsCoinStake());
+}
+bool CBlock::IsProofOfWork() const
+{
+    return !IsProofOfStake();
 }
 
 std::string CBlock::ToString() const

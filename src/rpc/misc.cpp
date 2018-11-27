@@ -29,6 +29,7 @@
 #include <boost/algorithm/string.hpp>
 
 #include <univalue.h>
+extern int64_t nLastCoinStakeSearchInterval;
 
 using namespace std;
 
@@ -999,5 +1000,42 @@ UniValue getspentinfo(const UniValue& params, bool fHelp)
     obj.push_back(Pair("index", (int)value.inputIndex));
     obj.push_back(Pair("height", value.blockHeight));
 
+    return obj;
+}
+
+
+UniValue getstakingstatus(const JSONRPCRequest& request)
+{
+    if (request.fHelp || request.params.size() != 0)
+        throw std::runtime_error(
+                "getstakingstatus\n"
+                "Returns an object containing various staking information.\n"
+                "\nResult:\n"
+                "{\n"
+                "  \"validtime\": true|false,          (boolean) if the chain tip is within staking phases\n"
+                "  \"haveconnections\": true|false,    (boolean) if network connections are present\n"
+                "  \"walletunlocked\": true|false,     (boolean) if the wallet is unlocked\n"
+                "  \"mintablecoins\": true|false,      (boolean) if the wallet has mintable coins\n"
+                "  \"enoughcoins\": true|false,        (boolean) if available coins are greater than reserve balance\n"
+                "  \"mnsync\": true|false,             (boolean) if masternode data is synced\n"
+                "  \"staking status\": true|false,     (boolean) if the wallet is staking or not\n"
+                "  \"staking tpos txid\" ,             (string)  if the wallet is tposing or not\n"
+                "}\n"
+                "\nExamples:\n" +
+                HelpExampleCli("getstakingstatus", "") + HelpExampleRpc("getstakingstatus", ""));
+    UniValue obj(UniValue::VOBJ);
+    obj.push_back(Pair("validtime", chainActive.Tip()->nTime > 1471482000));
+    obj.push_back(Pair("haveconnections", g_connman->GetNodeCount(CConnman::CONNECTIONS_ALL) > 0));
+    if (pwalletMain) {
+        obj.push_back(Pair("walletunlocked", !pwalletMain->IsLocked()));
+        obj.push_back(Pair("mintablecoins", pwalletMain->MintableCoins()));
+        obj.push_back(Pair("enoughcoins", pwalletMain->GetBalance() > 0));
+    }
+    obj.push_back(Pair("mnsync", masternodeSync.IsSynced()));
+    bool nStaking = false;
+    if (nLastCoinStakeSearchInterval > 0)
+        nStaking = true;
+    obj.push_back(Pair("staking status", nStaking));
+    uint256 txId;
     return obj;
 }
