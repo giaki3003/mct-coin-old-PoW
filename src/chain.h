@@ -340,7 +340,7 @@ public:
         return pbegin[(pend - pbegin)/2];
     }
 
-        bool IsProofOfWork() const
+    bool IsProofOfWork() const
     {
         return !(nFlags & BLOCK_PROOF_OF_STAKE);
     }
@@ -365,7 +365,7 @@ public:
         return (nFlags & BLOCK_STAKE_MODIFIER);
     }
     void SetStakeModifier(uint64_t nModifier, bool fGeneratedStakeModifier);
-
+    
     std::string ToString() const
     {
         return strprintf("CBlockIndex(pprev=%p, nHeight=%d, merkle=%s, hashBlock=%s)",
