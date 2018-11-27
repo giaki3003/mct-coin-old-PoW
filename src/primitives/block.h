@@ -121,6 +121,9 @@ public:
         return block;
     }
 
+    bool IsProofOfStake() const;
+    bool IsProofOfWork() const;   
+
     std::string ToString() const;
 };
 
