@@ -7,8 +7,14 @@
 #define BITCOIN_MINER_H
 
 #include "primitives/block.h"
+#include "txmempool.h" //Mempool changes have lead to this header being included here.
 
 #include <stdint.h>
+
+//Also added some boost libraries needed for most classes here.
+#include <memory>
+#include "boost/multi_index_container.hpp"
+#include "boost/multi_index/ordered_index.hpp"
 
 class CBlockIndex;
 class CChainParams;
