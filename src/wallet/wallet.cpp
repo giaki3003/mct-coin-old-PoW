@@ -3555,6 +3555,97 @@ bool CWallet::CommitTransaction(CWalletTx& wtxNew, CReserveKey& reservekey, CCon
     return true;
 }
 
+bool CWallet::CreateCoinStake(unsigned int nBits,
+                              CAmount blockReward,
+                              CMutableTransaction &txNew,
+                              unsigned int &nTxNewTime,
+                              std::vector<CWalletTx*> &vwtxPrev)
+{
+    // The following split & combine thresholds are important to security
+    // Should not be adjusted if you don't understand the consequences
+    //int64_t nCombineThreshold = 0;
+    txNew.vin.clear();
+    txNew.vout.clear();
+    // Mark coin stake transaction
+    CScript scriptEmpty;
+    scriptEmpty.clear();
+    txNew.vout.emplace_back(CTxOut(0, scriptEmpty));
+    // Choose coins to use
+    CAmount nBalance = GetBalance();
+    //    if (mapArgs.count("-reservebalance") && !ParseMoney(mapArgs["-reservebalance"], nReserveBalance))
+    //        return error("CreateCoinStake : invalid reserve balance amount");
+    //    if (nBalance <= nReserveBalance)
+    //        return false;
+    //  presstab HyperStake - Initialize as static and don't update the set on every run of CreateCoinStake() in order to lighten resource use
+    static StakeCoinsSet setStakeCoins;
+    static int nLastStakeSetUpdate = 0;
+    if (GetTime() - nLastStakeSetUpdate > nStakeSetUpdateTime) {
+        setStakeCoins.clear();
+        CScript scriptPubKey;
+        if (!SelectStakeCoins(setStakeCoins, nBalance /*- nReserveBalance*/, scriptPubKey)) {
+            return error("Failed to select coins for staking");
+        }
+        LogPrintf("Selected %d coins for staking\n", setStakeCoins.size());
+        nLastStakeSetUpdate = GetTime();
+    }
+    if (setStakeCoins.empty())
+        return error("CreateCoinStake() : No Coins to stake");
+    //prevent staking a time that won't be accepted
+    if (GetAdjustedTime() <= chainActive.Tip()->nTime)
+        MilliSleep(10000);
+    bool fKernelFound = false;
+    CAmount nCredit = 0;
+    for(const std::pair<const CWalletTx*, unsigned int> &pcoin : setStakeCoins)
+    {
+        //make sure that enough time has elapsed between
+        CBlockIndex* pindex = NULL;
+        BlockMap::iterator it = mapBlockIndex.find(pcoin.first->hashBlock);
+        if (it != mapBlockIndex.end())
+            pindex = it->second;
+        else {
+            LogPrintf("failed to find block index ");
+            continue;
+        }
+        // Read block header
+        CBlockHeader block = pindex->GetBlockHeader();
+        COutPoint prevoutStake = COutPoint(pcoin.first->GetHash(), pcoin.second);
+        nTxNewTime = GetAdjustedTime();
+        //iterates each utxo inside of CheckStakeKernelHash()
+        CScript kernelScript;
+        auto stakeScript = pcoin.first->tx->vout[pcoin.second].scriptPubKey;
+        fKernelFound = CreateCoinStakeKernel(kernelScript, stakeScript, nBits,
+                                             block, sizeof(CBlock), pcoin.first->tx,
+                                             prevoutStake, nTxNewTime, false);
+        if(fKernelFound)
+        {
+            FillCoinStakePayments(txNew, kernelScript, prevoutStake, blockReward);
+            break;
+        }
+    }
+    if(!fKernelFound)
+    {
+        LogPrintf("Failed to find coinstake kernel");
+        return false;
+    }
+    // Limit size
+    unsigned int nBytes = ::GetSerializeSize(txNew, SER_NETWORK, PROTOCOL_VERSION);
+    //    if (nBytes >= DEFAULT_BLOCK_MAX_SIZE / 5){
+    //        return error("CreateCoinStake() : exceeded coinstake size limit");
+    //    }
+    // Update coinbase transaction with additional info about masternode and governance payments,
+    // get some info back to pass to getblocktemplate
+    CTxOut txoutMasternode;
+    std::vector<CTxOut> voutSuperblock;
+    int nHeight = chainActive.Tip()->nHeight + 1;
+    FillBlockPayments(txNew, nHeight, blockReward, txoutMasternode, voutSuperblock);
+    AdjustMasternodePayment(txNew, txoutMasternode);
+    LogPrintf("CreateCoinStake -- nBlockHeight %d blockReward %lld txoutMasternode %s txNew %s",
+              nHeight, blockReward, txoutMasternode.ToString(), txNew.ToString());
+    nLastStakeSetUpdate = 0; //this will trigger stake set to repopulate next round
+    return true;
+}
+
+
 bool CWallet::AddAccountingEntry(const CAccountingEntry& acentry, CWalletDB & pwalletdb)
 {
     if (!pwalletdb.WriteAccountingEntry_Backend(acentry))
