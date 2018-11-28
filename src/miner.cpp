@@ -31,9 +31,11 @@
 #include "validationinterface.h"
 #include "blocksigner.h"
 
+#include <algorithm>
 #include <boost/thread.hpp>
 #include <boost/tuple/tuple.hpp>
 #include <queue>
+#include <utility>
 #include "wallet/wallet.h"
 
 using namespace std;
