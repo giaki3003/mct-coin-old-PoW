@@ -997,7 +997,8 @@ static bool ProcessBlockFound(const CBlock* pblock, const CChainParams& chainpar
 }
 
 // ***TODO*** that part changed in bitcoin, we are using a mix with old one here for now
-void static BitcoinMiner(const CChainParams& chainparams, CConnman& connman)
+void static BitcoinMiner(const CChainParams& chainparams, CConnman& connman,
+                         CWallet* pwallet, bool fProofOfStake)
 {
     LogPrintf("MCTMiner -- started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
