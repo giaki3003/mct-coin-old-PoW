@@ -11,6 +11,11 @@
 #include "serialize.h"
 #include "uint256.h"
 
+//Rough fix will have to mod later
+
+#include <iostream>
+#include <memory>
+
 /** An outpoint - a combination of a transaction hash and an index n into its vout */
 class COutPoint
 {
