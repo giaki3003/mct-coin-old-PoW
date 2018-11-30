@@ -32,11 +32,11 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
+WalletView::WalletView(const PlatformStyle *_platformStyle, QWidget *parent):
     QStackedWidget(parent),
     clientModel(0),
     walletModel(0),
-    platformStyle(platformStyle)
+    platformStyle(_platformStyle)
 {
     // Create tabs
     overviewPage = new OverviewPage(platformStyle);
@@ -82,9 +82,13 @@ WalletView::WalletView(const PlatformStyle *platformStyle, QWidget *parent):
     addWidget(sendCoinsPage);
 
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool()) {
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool()) {
         masternodeListPage = new MasternodeList(platformStyle);
         addWidget(masternodeListPage);
+    }
+    if (!fLiteMode && settings.value("fShowGovernanceTab").toBool()) {
+        governanceListPage = new GovernanceList(platformStyle);
+        addWidget(governanceListPage);
     }
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
@@ -132,55 +136,61 @@ void WalletView::setBitcoinGUI(BitcoinGUI *gui)
     }
 }
 
-void WalletView::setClientModel(ClientModel *clientModel)
+void WalletView::setClientModel(ClientModel *_clientModel)
 {
-    this->clientModel = clientModel;
+    this->clientModel = _clientModel;
 
-    overviewPage->setClientModel(clientModel);
-    sendCoinsPage->setClientModel(clientModel);
+    overviewPage->setClientModel(_clientModel);
+    sendCoinsPage->setClientModel(_clientModel);
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool()) {
-        masternodeListPage->setClientModel(clientModel);
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool()) {
+        masternodeListPage->setClientModel(_clientModel);
+    }
+    if (!fLiteMode && settings.value("fShowGovernanceTab").toBool()) {
+        governanceListPage->setClientModel(_clientModel);
     }
 }
 
-void WalletView::setWalletModel(WalletModel *walletModel)
+void WalletView::setWalletModel(WalletModel *_walletModel)
 {
-    this->walletModel = walletModel;
+    this->walletModel = _walletModel;
 
     // Put transaction list in tabs
-    transactionView->setModel(walletModel);
-    overviewPage->setWalletModel(walletModel);
+    transactionView->setModel(_walletModel);
+    overviewPage->setWalletModel(_walletModel);
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool()) {
-        masternodeListPage->setWalletModel(walletModel);
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool()) {
+        masternodeListPage->setWalletModel(_walletModel);
     }
-    receiveCoinsPage->setModel(walletModel);
-    sendCoinsPage->setModel(walletModel);
-    usedReceivingAddressesPage->setModel(walletModel->getAddressTableModel());
-    usedSendingAddressesPage->setModel(walletModel->getAddressTableModel());
+    if (!fLiteMode && settings.value("fShowGovernanceTab").toBool()) {
+        governanceListPage->setWalletModel(_walletModel);
+    }
+    receiveCoinsPage->setModel(_walletModel);
+    sendCoinsPage->setModel(_walletModel);
+    usedReceivingAddressesPage->setModel(_walletModel->getAddressTableModel());
+    usedSendingAddressesPage->setModel(_walletModel->getAddressTableModel());
 
-    if (walletModel)
+    if (_walletModel)
     {
         // Receive and pass through messages from wallet model
-        connect(walletModel, SIGNAL(message(QString,QString,unsigned int)), this, SIGNAL(message(QString,QString,unsigned int)));
+        connect(_walletModel, SIGNAL(message(QString,QString,unsigned int)), this, SIGNAL(message(QString,QString,unsigned int)));
 
         // Handle changes in encryption status
-        connect(walletModel, SIGNAL(encryptionStatusChanged(int)), this, SIGNAL(encryptionStatusChanged(int)));
+        connect(_walletModel, SIGNAL(encryptionStatusChanged(int)), this, SIGNAL(encryptionStatusChanged(int)));
         updateEncryptionStatus();
 
         // update HD status
-        Q_EMIT hdEnabledStatusChanged(walletModel->hdEnabled());
+        Q_EMIT hdEnabledStatusChanged(_walletModel->hdEnabled());
 
         // Balloon pop-up for new transaction
-        connect(walletModel->getTransactionTableModel(), SIGNAL(rowsInserted(QModelIndex,int,int)),
+        connect(_walletModel->getTransactionTableModel(), SIGNAL(rowsInserted(QModelIndex,int,int)),
                 this, SLOT(processNewTransaction(QModelIndex,int,int)));
 
         // Ask for passphrase if needed
-        connect(walletModel, SIGNAL(requireUnlock(bool)), this, SLOT(unlockWallet(bool)));
+        connect(_walletModel, SIGNAL(requireUnlock(bool)), this, SLOT(unlockWallet(bool)));
 
         // Show progress dialog
-        connect(walletModel, SIGNAL(showProgress(QString,int)), this, SLOT(showProgress(QString,int)));
+        connect(_walletModel, SIGNAL(showProgress(QString,int)), this, SLOT(showProgress(QString,int)));
     }
 }
 
@@ -217,8 +227,16 @@ void WalletView::gotoHistoryPage()
 void WalletView::gotoMasternodePage()
 {
     QSettings settings;
-    if (settings.value("fShowMasternodesTab").toBool()) {
+    if (!fLiteMode && settings.value("fShowMasternodesTab").toBool()) {
         setCurrentWidget(masternodeListPage);
+    }
+}
+
+void WalletView::gotoGovernancePage()
+{
+    QSettings settings;
+    if (!fLiteMode && settings.value("fShowGovernanceTab").toBool()) {
+        setCurrentWidget(governanceListPage);
     }
 }
 

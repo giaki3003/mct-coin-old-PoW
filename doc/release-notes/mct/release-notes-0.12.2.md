@@ -3,7 +3,7 @@ MCT Core version 0.12.2
 
 Release is now available from:
 
-  <https://www.mct.org/downloads/#wallets>
+  <https://www.mctpay.org/downloads/#wallets>
 
 This is a new major version release, bringing new features and other improvements.
 

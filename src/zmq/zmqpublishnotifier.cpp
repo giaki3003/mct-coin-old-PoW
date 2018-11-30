@@ -15,7 +15,7 @@ static const char *MSG_HASHTX     = "hashtx";
 static const char *MSG_HASHTXLOCK = "hashtxlock";
 static const char *MSG_RAWBLOCK   = "rawblock";
 static const char *MSG_RAWTX      = "rawtx";
-static const char *MSG_RAWTXLOCK = "rawtxlock";
+static const char *MSG_RAWTXLOCK  = "rawtxlock";
 
 // Internal function to send multipart message
 static int zmq_send_multipart(void *sock, const void* data, size_t size, ...)
@@ -31,6 +31,7 @@ static int zmq_send_multipart(void *sock, const void* data, size_t size, ...)
         if (rc != 0)
         {
             zmqError("Unable to initialize ZMQ msg");
+            va_end(args);
             return -1;
         }
 
@@ -44,6 +45,7 @@ static int zmq_send_multipart(void *sock, const void* data, size_t size, ...)
         {
             zmqError("Unable to send ZMQ msg");
             zmq_msg_close(&msg);
+            va_end(args);
             return -1;
         }
 
@@ -54,6 +56,7 @@ static int zmq_send_multipart(void *sock, const void* data, size_t size, ...)
 
         size = va_arg(args, size_t);
     }
+    va_end(args);
     return 0;
 }
 

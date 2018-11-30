@@ -757,8 +757,8 @@ Endereço: %4
         <translation>média-alta</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 duff(s) per input.</source>
-        <translation>Pode variar +/- %1 duff(s) por input</translation>
+        <source>Can vary +/- %1 politoshi(s) per input.</source>
+        <translation>Pode variar +/- %1 politoshi(s) por input</translation>
     </message>
     <message>
         <source>n/a</source>
@@ -3696,8 +3696,8 @@ https://www.transifex.com/projects/p/mct/</translation>
         <translation>Copyright (C) 2009-%i The Bitcoin Core Developers</translation>
     </message>
     <message>
-        <source>Copyright (C) 2014-%i The Dash Core Developers</source>
-        <translation>Copyright (C) 2014-%i Dash Core Developers</translation>
+        <source>Copyright (C) 2014-%i The MCT Core Developers</source>
+        <translation>Copyright (C) 2014-%i MCT Core Developers</translation>
     </message>
     <message>
         <source>Could not parse -rpcbind value %s as network address</source>

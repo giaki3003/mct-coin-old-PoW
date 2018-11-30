@@ -7,11 +7,9 @@
 #define BITCOIN_MINER_H
 
 #include "primitives/block.h"
-#include "txmempool.h" //Mempool changes have lead to this header being included here.
+#include "txmempool.h"
 
 #include <stdint.h>
-
-//Also added some boost libraries needed for most classes here.
 #include <memory>
 #include "boost/multi_index_container.hpp"
 #include "boost/multi_index/ordered_index.hpp"
@@ -22,10 +20,8 @@ class CConnman;
 class CReserveKey;
 class CScript;
 class CWallet;
-namespace Consensus { struct Params; };
 
-static const bool DEFAULT_GENERATE = false;
-static const int DEFAULT_GENERATE_THREADS = 1;
+namespace Consensus { struct Params; };
 
 static const bool DEFAULT_PRINTPRIORITY = false;
 
@@ -134,15 +130,6 @@ struct update_for_parent_inclusion
     CTxMemPool::txiter iter;
 };
 
-/* We wont be using this
-struct CBlockTemplate
-{
-    CBlock block;
-    std::vector<CAmount> vTxFees;
-    std::vector<int64_t> vTxSigOps;
-};
-*/
-
 /** Generate a new block, without valid proof-of-work */
 class BlockAssembler
 {
@@ -219,15 +206,10 @@ private:
     int UpdatePackagesForAdded(const CTxMemPool::setEntries& alreadyAdded, indexed_modified_transaction_set &mapModifiedTx);
 };
 
-
-
 /** Modify the extranonce in a block */
 void IncrementExtraNonce(CBlock* pblock, const CBlockIndex* pindexPrev, unsigned int& nExtraNonce);
 int64_t UpdateTime(CBlockHeader* pblock, const Consensus::Params& consensusParams, const CBlockIndex* pindexPrev);
 /** Run the miner threads */
-void GenerateBitcoins(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman& connman);
+void GenerateBitcoins(bool fGenerate, int nThreads, const CChainParams& chainparams, CConnman &connman);
 void ThreadStakeMinter(const CChainParams& chainparams, CConnman &connman, CWallet *pwallet);
-/** Generate a new block, without valid proof-of-work moved up*/
-//CBlockTemplate* CreateNewBlock(CWallet *wallet, const CChainParams& chainparams, const CScript& scriptPubKeyIn, bool fProofOfStake);
-
 #endif // BITCOIN_MINER_H

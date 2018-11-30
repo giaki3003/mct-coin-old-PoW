@@ -1,3 +1,2 @@
-debian/manpages/mctd.1
-debian/manpages/mct.conf.5
-debian/manpages/mct-cli.1
+doc/man/mctd.1
+doc/man/mct-cli.1

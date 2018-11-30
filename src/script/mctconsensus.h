@@ -39,6 +39,7 @@ typedef enum mctconsensus_error_t
     mctconsensus_ERR_TX_INDEX,
     mctconsensus_ERR_TX_SIZE_MISMATCH,
     mctconsensus_ERR_TX_DESERIALIZE,
+    mctconsensus_ERR_INVALID_FLAGS,
 } mctconsensus_error;
 
 /** Script verification flags */
@@ -47,7 +48,12 @@ enum
     mctconsensus_SCRIPT_FLAGS_VERIFY_NONE                = 0,
     mctconsensus_SCRIPT_FLAGS_VERIFY_P2SH                = (1U << 0), // evaluate P2SH (BIP16) subscripts
     mctconsensus_SCRIPT_FLAGS_VERIFY_DERSIG              = (1U << 2), // enforce strict DER (BIP66) compliance
+    mctconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY           = (1U << 4), // enforce NULLDUMMY (BIP147)
     mctconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY = (1U << 9), // enable CHECKLOCKTIMEVERIFY (BIP65)
+    mctconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY = (1U << 10), // enable CHECKSEQUENCEVERIFY (BIP112)
+    mctconsensus_SCRIPT_FLAGS_VERIFY_ALL                 = mctconsensus_SCRIPT_FLAGS_VERIFY_P2SH | mctconsensus_SCRIPT_FLAGS_VERIFY_DERSIG |
+                                                            mctconsensus_SCRIPT_FLAGS_VERIFY_NULLDUMMY | mctconsensus_SCRIPT_FLAGS_VERIFY_CHECKLOCKTIMEVERIFY |
+                                                            mctconsensus_SCRIPT_FLAGS_VERIFY_CHECKSEQUENCEVERIFY
 };
 
 /// Returns 1 if the input nIn of the serialized transaction pointed to by

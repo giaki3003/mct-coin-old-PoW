@@ -15,8 +15,6 @@
 
 #include <assert.h>
 #include <stdint.h>
-
-#include <boost/foreach.hpp>
 #include <unordered_map>
 
 /**
@@ -32,9 +30,10 @@ public:
     //! unspent transaction output
     CTxOut out;
 
-    //! whether containing transaction was a coinbase or a coinstake
+    //! whether containing transaction was a coinbase
     unsigned int fCoinBase : 1;
     unsigned int fCoinStake : 1;
+
 
     //! at which height this containing transaction was included in the active block chain
     uint32_t nHeight : 31;
@@ -46,16 +45,18 @@ public:
             fCoinStake(fCoinStakeIn),
             nHeight(nHeightIn)
     { }
-     Coin(const CTxOut& outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn) :
+
+    Coin(const CTxOut& outIn, int nHeightIn, bool fCoinBaseIn, bool fCoinStakeIn) :
             out(outIn),
             fCoinBase(fCoinBaseIn),
             fCoinStake(fCoinStakeIn),
             nHeight(nHeightIn)
     { }
-    
+
     void Clear() {
         out.SetNull();
         fCoinBase = false;
+        fCoinStake = false;
         nHeight = 0;
     }
 
@@ -71,20 +72,20 @@ public:
     }
 
     template<typename Stream>
-    void Serialize(Stream &s, int nType, int nVersion) const {
+    void Serialize(Stream &s) const {
         assert(!IsSpent());
         uint32_t code = nHeight * 2 + fCoinBase;
-        ::Serialize(s, VARINT(code), nType, nVersion);
-        ::Serialize(s, CTxOutCompressor(REF(out)), nType, nVersion);
+        ::Serialize(s, VARINT(code));
+        ::Serialize(s, CTxOutCompressor(REF(out)));
     }
 
     template<typename Stream>
-    void Unserialize(Stream &s, int nType, int nVersion) {
+    void Unserialize(Stream &s) {
         uint32_t code = 0;
-        ::Unserialize(s, VARINT(code), nType, nVersion);
+        ::Unserialize(s, VARINT(code));
         nHeight = code >> 1;
         fCoinBase = code & 1;
-        ::Unserialize(s, REF(CTxOutCompressor(out)), nType, nVersion);
+        ::Unserialize(s, REF(CTxOutCompressor(out)));
     }
 
     bool IsSpent() const {

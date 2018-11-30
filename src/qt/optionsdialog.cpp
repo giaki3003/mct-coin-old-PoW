@@ -83,19 +83,24 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
     }
 
     /* Display elements init */
-    
+
     /* Number of displayed decimal digits selector */
     QString digits;
     for(int index = 2; index <=8; index++){
         digits.setNum(index);
         ui->digits->addItem(digits, digits);
     }
-    
+
     /* Theme selector */
-    ui->theme->addItem(QString("MCT-light"), QVariant("light"));
-  
+    ui->theme->addItem(QString("light"), QVariant("light"));
+
     /* Language selector */
     QDir translations(":translations");
+
+    ui->bitcoinAtStartup->setToolTip(ui->bitcoinAtStartup->toolTip().arg(tr(PACKAGE_NAME)));
+    ui->bitcoinAtStartup->setText(ui->bitcoinAtStartup->text().arg(tr(PACKAGE_NAME)));
+
+    ui->lang->setToolTip(ui->lang->toolTip().arg(tr(PACKAGE_NAME)));
     ui->lang->addItem(QString("(") + tr("default") + QString(")"), QVariant(""));
     Q_FOREACH(const QString &langStr, translations.entryList())
     {
@@ -124,7 +129,7 @@ OptionsDialog::OptionsDialog(QWidget *parent, bool enableWallet) :
         }
     }
 #if QT_VERSION >= 0x040700
-    ui->thirdPartyTxUrls->setPlaceholderText("https://explorer.mct.plus/tx/%s");
+    ui->thirdPartyTxUrls->setPlaceholderText("https://example.com/tx/%s");
 #endif
 
     ui->unit->setModel(new BitcoinUnits(this));
@@ -148,22 +153,22 @@ OptionsDialog::~OptionsDialog()
     delete ui;
 }
 
-void OptionsDialog::setModel(OptionsModel *model)
+void OptionsDialog::setModel(OptionsModel *_model)
 {
-    this->model = model;
+    this->model = _model;
 
-    if(model)
+    if(_model)
     {
         /* check if client restart is needed and show persistent message */
-        if (model->isRestartRequired())
+        if (_model->isRestartRequired())
             showRestartWarning(true);
 
-        QString strLabel = model->getOverriddenByCommandLine();
+        QString strLabel = _model->getOverriddenByCommandLine();
         if (strLabel.isEmpty())
             strLabel = tr("none");
         ui->overriddenByCommandLineLabel->setText(strLabel);
 
-        mapper->setModel(model);
+        mapper->setModel(_model);
         setMapper();
         mapper->toFirst();
 
@@ -177,6 +182,7 @@ void OptionsDialog::setModel(OptionsModel *model)
     connect(ui->threadsScriptVerif, SIGNAL(valueChanged(int)), this, SLOT(showRestartWarning()));
     /* Wallet */
     connect(ui->showMasternodesTab, SIGNAL(clicked(bool)), this, SLOT(showRestartWarning()));
+    connect(ui->showGovernanceTab, SIGNAL(clicked(bool)), this, SLOT(showRestartWarning()));
     connect(ui->spendZeroConfChange, SIGNAL(clicked(bool)), this, SLOT(showRestartWarning()));
     /* Network */
     connect(ui->allowIncoming, SIGNAL(clicked(bool)), this, SLOT(showRestartWarning()));
@@ -199,12 +205,8 @@ void OptionsDialog::setMapper()
     /* Wallet */
     mapper->addMapping(ui->coinControlFeatures, OptionsModel::CoinControlFeatures);
     mapper->addMapping(ui->showMasternodesTab, OptionsModel::ShowMasternodesTab);
-    mapper->addMapping(ui->showAdvancedPSUI, OptionsModel::ShowAdvancedPSUI);
-    mapper->addMapping(ui->lowKeysWarning, OptionsModel::LowKeysWarning);
-    mapper->addMapping(ui->privateSendMultiSession, OptionsModel::PrivateSendMultiSession);
+    mapper->addMapping(ui->showGovernanceTab, OptionsModel::ShowGovernanceTab);
     mapper->addMapping(ui->spendZeroConfChange, OptionsModel::SpendZeroConfChange);
-    mapper->addMapping(ui->privateSendRounds, OptionsModel::PrivateSendRounds);
-    mapper->addMapping(ui->privateSendAmount, OptionsModel::PrivateSendAmount);
 
     /* Network */
     mapper->addMapping(ui->mapPortUpnp, OptionsModel::MapPortUPnP);
@@ -307,6 +309,9 @@ void OptionsDialog::showRestartWarning(bool fPersistent)
 void OptionsDialog::clearStatusLabel()
 {
     ui->statusLabel->clear();
+    if (model && model->isRestartRequired()) {
+        showRestartWarning(true);
+    }
 }
 
 void OptionsDialog::updateProxyValidationState()
@@ -316,7 +321,7 @@ void OptionsDialog::updateProxyValidationState()
     if (pUiProxyIp->isValid() && (!ui->proxyPort->isEnabled() || ui->proxyPort->text().toInt() > 0) && (!ui->proxyPortTor->isEnabled() || ui->proxyPortTor->text().toInt() > 0))
     {
         setOkButtonState(otherProxyWidget->isValid()); //only enable ok button if both proxys are valid
-        ui->statusLabel->clear();
+        clearStatusLabel();
     }
     else
     {

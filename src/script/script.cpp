@@ -15,7 +15,6 @@ inline std::string ValueString(const std::vector<unsigned char>& vch)
         return HexStr(vch);
 }
 
-using namespace std;
 
 const char* GetOpName(opcodetype opcode)
 {
@@ -136,7 +135,7 @@ const char* GetOpName(opcodetype opcode)
     case OP_CHECKMULTISIG          : return "OP_CHECKMULTISIG";
     case OP_CHECKMULTISIGVERIFY    : return "OP_CHECKMULTISIGVERIFY";
 
-    // expanson
+    // expansion
     case OP_NOP1                   : return "OP_NOP1";
     case OP_CHECKLOCKTIMEVERIFY    : return "OP_CHECKLOCKTIMEVERIFY";
     case OP_CHECKSEQUENCEVERIFY    : return "OP_CHECKSEQUENCEVERIFY";
@@ -193,7 +192,7 @@ unsigned int CScript::GetSigOpCount(const CScript& scriptSig) const
     // get the last item that the scriptSig
     // pushes onto the stack:
     const_iterator pc = scriptSig.begin();
-    vector<unsigned char> data;
+    std::vector<unsigned char> data;
     while (pc < scriptSig.end())
     {
         opcodetype opcode;
@@ -228,21 +227,19 @@ bool CScript::IsPayToScriptHash() const
             (*this)[22] == OP_EQUAL);
 }
 
-bool CScript::IsPushOnly(const_iterator pc) const
+bool CScript::IsPayToPublicKey() const
 {
-    while (pc < end())
-    {
-        opcodetype opcode;
-        if (!GetOp(pc, opcode))
-            return false;
-        // Note that IsPushOnly() *does* consider OP_RESERVED to be a
-        // push-type opcode, however execution of OP_RESERVED fails, so
-        // it's not relevant to P2SH/BIP62 as the scriptSig would fail prior to
-        // the P2SH special validation code being executed.
-        if (opcode > OP_16)
-            return false;
+    // Test for pay-to-pubkey CScript with both
+    // compressed or uncompressed pubkey
+    if (this->size() == 35) {
+        return ((*this)[1] == 0x02 || (*this)[1] == 0x03) &&
+                (*this)[34] == OP_CHECKSIG;
     }
-    return true;
+    if (this->size() == 67) {
+        return (*this)[1] == 0x04 &&
+                (*this)[66] == OP_CHECKSIG;
+    }
+    return false;
 }
 
 std::string CScript::ToString() const
@@ -266,6 +263,23 @@ std::string CScript::ToString() const
             str += GetOpName(opcode);
     }
     return str;
+}
+
+bool CScript::IsPushOnly(const_iterator pc) const
+{
+    while (pc < end())
+    {
+        opcodetype opcode;
+        if (!GetOp(pc, opcode))
+            return false;
+        // Note that IsPushOnly() *does* consider OP_RESERVED to be a
+        // push-type opcode, however execution of OP_RESERVED fails, so
+        // it's not relevant to P2SH/BIP62 as the scriptSig would fail prior to
+        // the P2SH special validation code being executed.
+        if (opcode > OP_16)
+            return false;
+    }
+    return true;
 }
 
 bool CScript::IsPushOnly() const
