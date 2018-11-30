@@ -148,7 +148,7 @@ public:
             consensus.fPowNoRetargeting = false;
             consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
             consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
-            consensus.nLastPoWBlock = 255020;
+            consensus.nLastPoWBlock = 257000;
             // Stake information
             consensus.nPosTargetSpacing = 2 * 60; // PoSW: 2 minutes
             consensus.nPosTargetTimespan = 60 * 40;
@@ -179,7 +179,7 @@ public:
             nDefaultPort = 9551;
             //nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
             //nDelayGetHeadersTime = 24 * 60 * 60;
-            nPruneAfterHeight = 100000;
+            nPruneAfterHeight = 999999999;
 
             genesis = CreateGenesisBlock(1527453712, 4953922, 0x1e0ffff0, 1, 50 * COIN);
             consensus.hashGenesisBlock = genesis.GetHash();
