@@ -279,11 +279,11 @@ libbitcoin_zmq_a_SOURCES = \
 endif
 
 
-# wallet: shared between mctd and mct-qt, but only linked
+# wallet: shared between acedd and aced-qt, but only linked
 # when wallet enabled
-libmct_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
-libmct_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
-libmct_wallet_a_SOURCES = \
+libbitcoin_wallet_a_CPPFLAGS = $(AM_CPPFLAGS) $(BITCOIN_INCLUDES)
+libbitcoin_wallet_a_CXXFLAGS = $(AM_CXXFLAGS) $(PIE_FLAGS)
+libbitcoin_wallet_a_SOURCES = \
   kernel.cpp \
   keepass.cpp \
   blocksigner.cpp \
