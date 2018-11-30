@@ -213,7 +213,7 @@ public:
 
             nPoolMaxTransactions = 3;
             nFulfilledRequestExpireTime = 60*60; // fulfilled requests expire in 1 hour
-            strSporkAddress = "MAvya6xSBRb755Uhe2aXBFsjuyi68hTP8u";
+            strSporkAddress = "PAvya6xSBRb755Uhe2aXBFsjuyi68hTP8u";
 
             checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
@@ -312,14 +312,14 @@ public:
             pchMessageStart[1] = 0xe2;
             pchMessageStart[2] = 0xca;
             pchMessageStart[3] = 0xff;
-            vAlertPubKey = ParseHex("04517d8a699cb43d3938d7b24faaff7cda448ca4ea267723ba614784de661949bf632d6304316b244646dea079735b9a6fc4af804efb4752075b9fe2245e14e412");
+            vAlertPubKey = ParseHex("040389fde3d4a65b7123096b8f185cd5bc6e90c1d526b0ff36ed3b5b91c6877f3f38ad2201ebaf8389125913828ba8cf2f28634ce57033f423ee71840bc4ce5720");
             nDefaultPort = 21430;
             nPruneAfterHeight = 1000;
 
             genesis = CreateGenesisBlock(1518833511, 113300, 0x1e0ffff0, 1, 50 * COIN);
             consensus.hashGenesisBlock = genesis.GetHash();
-            assert(consensus.hashGenesisBlock == uint256S("0x0000009038aeaea86784e959b0b4002793adad39fc9d6f8789ed2edf99ad5c8b"));
-            assert(genesis.hashMerkleRoot == uint256S("0x5dc9bcf5d1e4802dad0045a88849e3ad97d07a5b8aaee1114ed5ae03b98c4bfc"));
+            assert(consensus.hashGenesisBlock == uint256S("0x00000e8b5870751168de398f5dfc190108a121cab434004ef84ddf3bcfbcf3df"));
+            assert(genesis.hashMerkleRoot == uint256S("0xc807b5315065804037ea051fbe34b77b5ee9ba4e499524c2c37fe0bc37b8ff34"));
 
 
 
@@ -458,8 +458,8 @@ public:
 
             genesis = CreateGenesisBlock(1417713337, 1096447, 0x207fffff, 1, 50 * COIN);
             consensus.hashGenesisBlock = genesis.GetHash();
-            assert(consensus.hashGenesisBlock == uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"));
-            assert(genesis.hashMerkleRoot == uint256S("0xe0028eb9648db56b1ac77cf090b99048a8007e2bb64b68f092c03c7f56a662c7"));
+            assert(consensus.hashGenesisBlock == uint256S("0x1c8c77a13f08cf4232420d9bb042e4a436ef69ddd309ae3c73d8bb1bb7c2a3b5"));
+            assert(genesis.hashMerkleRoot == uint256S("0xc807b5315065804037ea051fbe34b77b5ee9ba4e499524c2c37fe0bc37b8ff34"));
 
             devnetGenesis = FindDevNetGenesisBlock(consensus, genesis, 50 * COIN);
             consensus.hashDevnetGenesisBlock = devnetGenesis.GetHash();
@@ -496,7 +496,7 @@ public:
 
             checkpointData = (CCheckpointData) {
                     boost::assign::map_list_of
-                            (      0, uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"))
+                            (      0, uint256S("0x1c8c77a13f08cf4232420d9bb042e4a436ef69ddd309ae3c73d8bb1bb7c2a3b5"))
                             (      1, devnetGenesis.GetHash())
             };
 
@@ -584,8 +584,8 @@ public:
 
             genesis = CreateGenesisBlock(1513831322, 887612, 0x1e0ffff0, 1, 50 * COIN);
             consensus.hashGenesisBlock = genesis.GetHash();
-            assert(consensus.hashGenesisBlock == uint256S("0x00000f3b4ec57f851b3706c056eda3120875896c9970495ae2efd49b46472a05"));
-            assert(genesis.hashMerkleRoot == uint256S("0x5dc9bcf5d1e4802dad0045a88849e3ad97d07a5b8aaee1114ed5ae03b98c4bfc"));
+            assert(consensus.hashGenesisBlock == uint256S("0x1c8c77a13f08cf4232420d9bb042e4a436ef69ddd309ae3c73d8bb1bb7c2a3b5"));
+            assert(genesis.hashMerkleRoot == uint256S("0xc807b5315065804037ea051fbe34b77b5ee9ba4e499524c2c37fe0bc37b8ff34"));
 
 
             vFixedSeeds.clear(); //!< Regtest mode doesn't have any fixed seeds.
@@ -605,7 +605,7 @@ public:
 
             checkpointData = (CCheckpointData){
                     boost::assign::map_list_of
-                            ( 0, uint256S("0x000008ca1832a4baf228eb1553c03d3a2c8e02399550dd6ea8d65cec3ef23d2e"))
+                            ( 0, uint256S("0x1c8c77a13f08cf4232420d9bb042e4a436ef69ddd309ae3c73d8bb1bb7c2a3b5"))
             };
 
             chainTxData = ChainTxData{
