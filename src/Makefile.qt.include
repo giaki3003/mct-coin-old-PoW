@@ -4,7 +4,7 @@
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 bin_PROGRAMS += qt/mct-qt
-EXTRA_LIBRARIES += qt/libmctqt.a
+EXTRA_LIBRARIES += qt/libbitcoinqt.a
 
 # mct qt core #
 QT_TS = \
@@ -370,7 +370,7 @@ endif
 if TARGET_WINDOWS
   qt_mct_qt_SOURCES += $(BITCOIN_RC)
 endif
-qt_mct_qt_LDADD = qt/libmctqt.a $(LIBBITCOIN_SERVER)
+qt_mct_qt_LDADD = qt/libbitcoinqt.a $(LIBBITCOIN_SERVER)
 if ENABLE_WALLET
 qt_mct_qt_LDADD += $(LIBBITCOIN_WALLET)
 endif
