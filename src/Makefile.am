@@ -38,7 +38,7 @@ if ENABLE_ZMQ
 LIBBITCOIN_ZMQ=libbitcoin_zmq.a
 endif
 if BUILD_BITCOIN_LIBS
-LIBBITCOINCONSENSUS=libbitcoinconsensus.la
+LIBBITCOINCONSENSUS=libmctconsensus.la
 endif
 if ENABLE_WALLET
 LIBBITCOIN_WALLET=libbitcoin_wallet.a
