@@ -1349,8 +1349,8 @@ bool AppInitMain(boost::thread_group& threadGroup, CScheduler& scheduler)
             threadGroup.create_thread(&ThreadScriptCheck);
     }
 
-    if (!sporkManager.SetSporkAddress(GetArg("-sporkaddr", Params().SporkAddress())))
-        return InitError(_("Invalid spork address specified with -sporkaddr"));
+//    if (!sporkManager.SetSporkAddress(GetArg("-sporkaddr", Params().SporkAddress())))
+//        return InitError(_("Invalid spork address specified with -sporkaddr"));
 
     if (IsArgSet("-sporkkey")) // spork priv key
     {
