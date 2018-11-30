@@ -1110,7 +1110,7 @@ void CMasternodePayments::UpdatedBlockTip(const CBlockIndex *pindex, CConnman& c
 }
 void AdjustMasternodePayment(CMutableTransaction &tx, const CTxOut &txoutMasternodePayment)
 {
-    return
+    return;
 /*
     auto it = std::find(std::begin(tx.vout), std::end(tx.vout), txoutMasternodePayment);
 
