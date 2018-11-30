@@ -348,7 +348,7 @@ bool CBlockTreeDB::LoadBlockIndexGuts(boost::function<CBlockIndex*(const uint256
 {
     boost::scoped_ptr<CDBIterator> pcursor(NewIterator());
 
-    pcursor->Seek(make_pair(DB_BLOCK_INDEX, uint256()));
+    pcursor->Seek(std::make_pair(DB_BLOCK_INDEX, uint256()));
 
     // Load mapBlockIndex
     while (pcursor->Valid()) {
