@@ -130,15 +130,15 @@ public:
             consensus.nBudgetPaymentsStartBlock = 328008; // actual historical value
             consensus.nBudgetPaymentsCycleBlocks = 43200; // ~60*24*30
             consensus.nBudgetPaymentsWindowBlocks = 100;
-            consensus.nBudgetProposalEstablishingTime = 60*60*24;
+            //consensus.nBudgetProposalEstablishingTime = 60*60*24;
             consensus.nSuperblockStartBlock = 296600; // one year and 1 month from now
             consensus.nSuperblockCycle = 43200; // ~60*24*30
             consensus.nGovernanceMinQuorum = 10;
             consensus.nGovernanceFilterElements = 20000;
             consensus.nMasternodeMinimumConfirmations = 15;
-            consensus.nMajorityEnforceBlockUpgrade = 750;
-            consensus.nMajorityRejectBlockOutdated = 950;
-            consensus.nMajorityWindow = 1000;
+            //consensus.nMajorityEnforceBlockUpgrade = 750;
+            //consensus.nMajorityRejectBlockOutdated = 950;
+            //consensus.nMajorityWindow = 1000;
             consensus.BIP34Height = 1;
             consensus.BIP34Hash = uint256S("0x000008beee6fa1e2212145f7ccfa10d4f1dfe265e8e1f4b21dd4c196c639cff8");
             consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
@@ -177,8 +177,8 @@ public:
             pchMessageStart[3] = 0xb1;
             vAlertPubKey = ParseHex("04fdd84c016631fd15b83201356693291cd1d3aa3fa2cb43523920fd0419e289349ab685ef81eeba333a4a87f01e15f134f336d688b6db4f842ca38a04bd8d536a");
             nDefaultPort = 9551;
-            nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
-            nDelayGetHeadersTime = 24 * 60 * 60;
+            //nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
+            //nDelayGetHeadersTime = 24 * 60 * 60;
             nPruneAfterHeight = 100000;
 
             genesis = CreateGenesisBlock(1527453712, 4953922, 0x1e0ffff0, 1, 50 * COIN);
@@ -209,7 +209,7 @@ public:
             fDefaultConsistencyChecks = false;
             fRequireStandard = true;
             fMineBlocksOnDemand = true;
-            fTestnetToBeDeprecatedFieldRPC = false;
+            //fTestnetToBeDeprecatedFieldRPC = false;
 
             nPoolMaxTransactions = 3;
             nFulfilledRequestExpireTime = 60*60; // fulfilled requests expire in 1 hour
@@ -218,10 +218,7 @@ public:
             checkpointData = (CCheckpointData) {
                 boost::assign::map_list_of
                 ( 0, uint256S("0x000003470aebda8e4c312b725f3d712d73d29bd66870237a592e234528ede2a8")),
-                1527453712, // * UNIX timestamp of last checkpoint block
-                0,    // * total number of transactions between genesis and last checkpoint
-                            //   (the tx=... number in the SetBestChain debug.log lines)
-                500        // * estimated number of transactions per day after checkpoint
+            
             };
         chainTxData = ChainTxData{
             1527926979, // * UNIX timestamp of last checkpoint block
