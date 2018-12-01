@@ -3637,37 +3637,58 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                     nValueToSelect += nFeeRet;
                 double dPriority = 0;
                 // vouts to the payees
-                for (const auto& recipient : vecSend)
+                if(coinControl && !coinControl->fSplitBlock)
                 {
-                    CTxOut txout(recipient.nAmount, recipient.scriptPubKey);
-
-                    if (recipient.fSubtractFeeFromAmount)
+                    for (const auto& recipient : vecSend)
                     {
-                        txout.nValue -= nFeeRet / nSubtractFeeFromAmount; // Subtract fee equally from each selected recipient
+                        CTxOut txout(recipient.nAmount, recipient.scriptPubKey);
 
-                        if (fFirst) // first receiver pays the remainder not divisible by output count
+                        if (recipient.fSubtractFeeFromAmount)
                         {
-                            fFirst = false;
-                            txout.nValue -= nFeeRet % nSubtractFeeFromAmount;
+                            txout.nValue -= nFeeRet / nSubtractFeeFromAmount; // Subtract fee equally from each selected recipient
+
+                            if (fFirst) // first receiver pays the remainder not divisible by output count
+                            {
+                                fFirst = false;
+                                txout.nValue -= nFeeRet % nSubtractFeeFromAmount;
+                            }
                         }
-                    }
 
-                    if (txout.IsDust(dustRelayFee))
-                    {
-                        if (recipient.fSubtractFeeFromAmount && nFeeRet > 0)
+                        if (txout.IsDust(dustRelayFee))
                         {
-                            if (txout.nValue < 0)
-                                strFailReason = _("The transaction amount is too small to pay the fee");
+                            if (recipient.fSubtractFeeFromAmount && nFeeRet > 0)
+                            {
+                                if (txout.nValue < 0)
+                                    strFailReason = _("The transaction amount is too small to pay the fee");
+                                else
+                                    strFailReason = _("The transaction amount is too small to send after the fee has been deducted");
+                            }
                             else
-                                strFailReason = _("The transaction amount is too small to send after the fee has been deducted");
+                                strFailReason = _("Transaction amount too small");
+                            return false;
                         }
-                        else
-                            strFailReason = _("Transaction amount too small");
-                        return false;
+                        txNew.vout.push_back(txout);
                     }
-                    txNew.vout.push_back(txout);
                 }
-
+                else //UTXO Splitter Transaction
+                {
+                    int nSplitBlock = coinControl->nSplitBlock;
+                    if(nSplitBlock < 1)
+                        nSplitBlock = 1;
+                     BOOST_FOREACH (const PAIRTYPE(CScript, CAmount)& s, vecSend)
+                    {
+                        for(int i = 0; i < nSplitBlock; i++)
+                        {
+                            if(i == nSplitBlock - 1)
+                            {
+                                uint64_t nRemainder = s.second % nSplitBlock;
+                                txNew.vout.push_back(CTxOut((s.second / nSplitBlock) + nRemainder, s.first));
+                            }
+                            else
+                                txNew.vout.push_back(CTxOut(s.second / nSplitBlock, s.first));
+                        }
+                    }
+                }
                 // Choose coins to use
                 CAmount nValueIn = 0;
                 setCoins.clear();

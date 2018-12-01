@@ -14,6 +14,8 @@ public:
     CTxDestination destChange;
     bool fUsePrivateSend;
     bool fUseInstantSend;
+    bool fSplitBlock;
+    int nSplitBlock;
     //! If false, allows unselected inputs, but requires all selected inputs be used
     bool fAllowOtherInputs;
     //! Includes watch only addresses which match the ISMINE_WATCH_SOLVABLE criteria
@@ -35,6 +37,8 @@ public:
         fUseInstantSend = false;
         fUsePrivateSend = true;
         nMinimumTotalFee = 0;
+        fSplitBlock = false;
+        nSplitBlock = 1;
     }
 
     bool HasSelected() const

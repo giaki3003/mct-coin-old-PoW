@@ -1203,6 +1203,10 @@ padding:2px;
 QDialog#SendCoinsDialog .QFrame#frameCoinControl .QCheckBox#checkBoxCoinControlChange { /* Custom Change Label */
 }
 
+QDialog#SendCoinsDialog .QFrame#frameCoinControl .QCheckBox#splitBlockCheckBox { /*SPLIT BLOCK CHECK BOX */
+color:#ffffff;
+}
+
 QDialog#SendCoinsDialog .QFrame#frameCoinControl .QValidatedLineEdit#lineEditCoinControlChange { /* Custom Change Address */
 }
 
