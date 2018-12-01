@@ -1306,7 +1306,7 @@ CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParam
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    return = blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
+    return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
 }
 
 bool IsInitialBlockDownload()
