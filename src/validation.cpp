@@ -1281,14 +1281,14 @@ NOTE:   unlike bitcoin we are using PREVIOUS block height here,
         might be a good idea to change this to use prev bits
         but current height to avoid confusion.
 */
-CAmount GetBlockSubsidy(int nPrevBits, int nHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
+CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
 {
-  int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
+  int halvings = nPrevHeight / consensusParams.nSubsidyHalvingInterval;
     // Force block reward to zero when right shift is undefined.
     if (halvings >= 35)
         return 0;
 
-          if (nHeight == 1)
+          if (nPrevHeight == 0)
               return 1500000 * COIN;             
 
 
@@ -1299,15 +1299,14 @@ CAmount GetBlockSubsidy(int nPrevBits, int nHeight, const Consensus::Params& con
     nSubsidy >>= halvings;
 
     // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
-    CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
+    CAmount nSuperblockPart = (nPrevHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
 }
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    CAmount ret = blockValue/2; // Miner: 25 MCT | Masternodes: 25 MCT)
-    return ret;
+    return = blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
 }
 
 bool IsInitialBlockDownload()
