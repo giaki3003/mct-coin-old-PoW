@@ -3675,7 +3675,8 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                     int nSplitBlock = coinControl->nSplitBlock;
                     if(nSplitBlock < 1)
                         nSplitBlock = 1;
-                     BOOST_FOREACH (const PAIRTYPE(CScript, CAmount)& s, vecSend)
+                    
+                    for (const auto& recipient : vecSend)
                     {
                         for(int i = 0; i < nSplitBlock; i++)
                         {
