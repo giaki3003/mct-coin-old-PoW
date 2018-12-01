@@ -208,7 +208,7 @@ unsigned int GetNextWorkRequiredBTC(const CBlockIndex* pindexLast, const CBlockH
     // Only change once per interval
     if ((pindexLast->nHeight+1) % params.DifficultyAdjustmentInterval() != 0)
     {
-        if (params.fPowAllowMinDifficultyBlocks)
+        if (5==5)
         {
             // Special difficulty rule for testnet:
             // If the new block's timestamp is more than 2* 2.5 minutes
@@ -238,13 +238,13 @@ unsigned int GetNextWorkRequiredBTC(const CBlockIndex* pindexLast, const CBlockH
 
 unsigned int GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock, const Consensus::Params& params)
 {
-/*    // Most recent algo first
+    // Most recent algo first
     if (pindexLast->nHeight  <= params.nLastPoWBlock && pindexLast->nHeight >= params.nLastPoWBlock - 5) {
     const arith_uint256 bnPowLimit = UintToArith256(params.powLimit);
         return bnPowLimit.GetCompact();
-Will add back later 
+//Will add back later 
 //  return 0x1e0ffff0;
-    }*/
+    }
     if (pindexLast->nHeight >= params.nLastPoWBlock) {
         if(pindexLast->nHeight  <= (params.nLastPoWBlock + params.nPoSDiffAdjustRange)){
             return PoW2PoSRequired(pindexLast, params);
