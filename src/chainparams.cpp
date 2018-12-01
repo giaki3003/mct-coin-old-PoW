@@ -136,9 +136,9 @@ public:
             consensus.nGovernanceMinQuorum = 10;
             consensus.nGovernanceFilterElements = 20000;
             consensus.nMasternodeMinimumConfirmations = 15;
-            //consensus.nMajorityEnforceBlockUpgrade = 750;
-            //consensus.nMajorityRejectBlockOutdated = 950;
-            //consensus.nMajorityWindow = 1000;
+            consensus.nMajorityEnforceBlockUpgrade = 750;
+            consensus.nMajorityRejectBlockOutdated = 950;
+            consensus.nMajorityWindow = 1000;
             consensus.BIP34Height = 1;
             consensus.BIP34Hash = uint256S("0x000008beee6fa1e2212145f7ccfa10d4f1dfe265e8e1f4b21dd4c196c639cff8");
             consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
