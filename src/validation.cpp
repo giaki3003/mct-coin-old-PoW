@@ -1281,59 +1281,33 @@ NOTE:   unlike bitcoin we are using PREVIOUS block height here,
         might be a good idea to change this to use prev bits
         but current height to avoid confusion.
 */
-CAmount GetBlockSubsidy(int nPrevHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
+CAmount GetBlockSubsidy(int nPrevBits, int nHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
 {
-    CAmount nSubsidyBase = 10;
-    /*
-    NOTE:   unlike bitcoin we are using PREVIOUS block height here,
-            might be a good idea to change this to use prev bits
-            but current height to avoid confusion.
-    */
-    // Old Block reward
-    if(nPrevHeight <= 4) {nSubsidyBase = 50000;}
-    if(nPrevHeight == 9) {nSubsidyBase = 1;}
-    if(nPrevHeight == 19) {nSubsidyBase = 1;}
-    if(nPrevHeight == 719) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 1439) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 2159) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 2879) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 3599) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 4319) {nSubsidyBase = 1000;}
-    if(nPrevHeight == 5039) {nSubsidyBase = 1000;}
-    if(nPrevHeight > 6000) {nSubsidyBase = 20;}
-    if(nPrevHeight == 10079) {nSubsidyBase = 2000;}
-    if(nPrevHeight == 15119) {nSubsidyBase = 2000;}
-    if(nPrevHeight == 20159) {nSubsidyBase = 2000;}
-    if(nPrevHeight == 40319) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 60479) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 80639) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 100799) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 120959) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 141119) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 161279) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 181439) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 181439) {nSubsidyBase = 5000;}
-    if(nPrevHeight == 201599) {nSubsidyBase = 5000;}
+  int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
+    // Force block reward to zero when right shift is undefined.
+    if (halvings >= 35)
+        return 0;
 
-    // New Block Reward
-    if(nPrevHeight > 201599) {nSubsidyBase = 20;}
+          if (nHeight == 1)
+              return 1500000 * COIN;             
+
 
     // LogPrintf("height %u diff %4.2f reward %d\n", nPrevHeight, dDiff, nSubsidyBase);
-    CAmount nSubsidy = nSubsidyBase * COIN;
+      CAmount nSubsidy = 50 * COIN;
 
-    // yearly decline of production by ~20% per year, projected ~25M coins max by year 2043+.
-    for (int i = consensusParams.nSubsidyHalvingInterval; i <= nPrevHeight; i += consensusParams.nSubsidyHalvingInterval) {
-        nSubsidy -= nSubsidy/5;
-    }
+      // Subsidy is cut in half every 865000 blocks which will occur approximately every 3 years.
+    nSubsidy >>= halvings;
 
     // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
-    CAmount nSuperblockPart = (nPrevHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
+    CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
 }
+
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    return blockValue * 0.8 ;
+    CAmount ret = blockValue/2; // Miner: 25 MCT | Masternodes: 25 MCT)
+    return ret;
 }
 
 bool IsInitialBlockDownload()
