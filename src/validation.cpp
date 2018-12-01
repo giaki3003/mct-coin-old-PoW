@@ -3543,7 +3543,7 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Co
     if (nSigOps > MaxBlockSigOps(fDIP0001Active_context))
         return state.DoS(10, false, REJECT_INVALID, "bad-blk-sigops", false, "out-of-bounds SigOpCount");
 
-    // Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
+    /* Enforce block.nVersion=2 rule that the coinbase starts with serialized block height
     // if 750 of the last 1,000 blocks are version 2 or greater (51/100 if testnet):
     if (block.nVersion >= 2 && IsSuperMajority(2, pindexPrev, consensusParams.nMajorityEnforceBlockUpgrade, consensusParams))
     {
@@ -3553,7 +3553,7 @@ bool ContextualCheckBlock(const CBlock& block, CValidationState& state, const Co
             return state.DoS(100, error("%s: block height mismatch in coinbase", __func__), REJECT_INVALID, "bad-cb-height");
         }
     }
-
+    */
     return true;
 }
 
