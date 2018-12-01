@@ -3682,11 +3682,11 @@ bool CWallet::CreateTransaction(const std::vector<CRecipient>& vecSend, CWalletT
                         {
                             if(i == nSplitBlock - 1)
                             {
-                                uint64_t nRemainder = recipient.second % nSplitBlock;
-                                txNew.vout.push_back(CTxOut((recipient.second / nSplitBlock) + nRemainder, recipient.first));
+                                uint64_t nRemainder = s.second % nSplitBlock;
+                                txNew.vout.push_back(CTxOut((s.second / nSplitBlock) + nRemainder, s.first));
                             }
                             else
-                                txNew.vout.push_back(CTxOut(recipient.second / nSplitBlock, recipient.first));
+                                txNew.vout.push_back(CTxOut(s.second / nSplitBlock, s.first));
                         }
                     }
                 }
