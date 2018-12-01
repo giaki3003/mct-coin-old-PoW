@@ -59,6 +59,10 @@ struct Params {
     int nGovernanceMinQuorum; // Min absolute vote count to trigger an action
     int nGovernanceFilterElements;
     int nMasternodeMinimumConfirmations;
+    /** Used to check majorities for block version upgrade */
+    int nMajorityEnforceBlockUpgrade;
+    int nMajorityRejectBlockOutdated;
+    int nMajorityWindow;
     /** Block height and hash at which BIP34 becomes active */
     int BIP34Height;
     uint256 BIP34Hash;
