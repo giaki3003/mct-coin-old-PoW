@@ -116,9 +116,15 @@ CMasternode::CollateralStatus CMasternode::CheckCollateral(const COutPoint& outp
         return COLLATERAL_UTXO_NOT_FOUND;
     }
 
+    if(chainActive.Height() >= 256564) {
+    if(coin.out.nValue != 15000000 * COIN) {
+        return COLLATERAL_INVALID_AMOUNT;
+    }
+    } else {
     if(coin.out.nValue != 15000 * COIN) {
         return COLLATERAL_INVALID_AMOUNT;
     }
+}
 
     if(pubkey == CPubKey() || coin.out.scriptPubKey != GetScriptForDestination(pubkey.GetID())) {
         return COLLATERAL_INVALID_PUBKEY;
@@ -555,7 +561,7 @@ bool CMasternodeBroadcast::CheckOutpoint(int& nDos)
     }
 
     if (err == COLLATERAL_INVALID_AMOUNT) {
-        LogPrint("masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternode UTXO should have 1000 MCT, masternode=%s\n", outpoint.ToStringShort());
+        LogPrint("masternode", "CMasternodeBroadcast::CheckOutpoint -- Masternodes have been disabled, masternode=%s\n", outpoint.ToStringShort());
         nDos = 33;
         return false;
     }
