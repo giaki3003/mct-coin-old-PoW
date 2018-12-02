@@ -144,7 +144,7 @@ public:
             consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); //diff adjustments
             consensus.nPowTargetTimespan = 24 * 60 * 60; // MCT: 1 day
             consensus.nPowTargetSpacing = 1 * 60; // MCT: 60 seconds
-            consensus.fPowAllowMinDifficultyBlocks = true;//Mindiff blocks are needed
+            consensus.fPowAllowMinDifficultyBlocks = false;//Mindiff blocks are needed, but apparently they break consensus
             consensus.fPowNoRetargeting = false;
             consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
             consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
