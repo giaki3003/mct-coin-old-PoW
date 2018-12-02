@@ -1284,37 +1284,35 @@ NOTE:   unlike bitcoin we are using PREVIOUS block height here,
 */
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
 {
-  CAmount nSubsidy 0 * COIN;
   int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
     // Force block reward to zero when right shift is undefined.
     if (halvings >= 35)
         return 0;
 
         if (nHeight == 1) {
-            nSubsidy = 1500000 * COIN;
+            return 1500000 * COIN;
         }
         else if (nHeight <= 210000 && nHeight >= 1) {
-            nSubsidy = 50 * COIN;
+            return 50 * COIN;
         }
         else if (nHeight <= 258195 && nHeight > 210000) {
-            nSubsidy = 25 * COIN;
+            return 25 * COIN;
         }
         else if (nHeight > 258195 && nHeight <= 348201) {
-            nSubsidy = 8 * COIN;
+            return 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
-            nSubsidy = 4 * COIN;
+            return 4 * COIN;
         }
         else if (nHeight <= 600202 && nHeight > 456202) {
-            nSubsidy = 2 * COIN;
+            return 2 * COIN;
         }
         else if (nHeight <= 765828 && nHeight > 600203) {
-            nSubsidy = 1 * COIN;
+            return 1 * COIN;
         }
         else {
-            nSubsidy = 0 * COIN;            
+            return 0 * COIN;            
         }
-    return CAmount nSubsidy;
 
     /* Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
     CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
