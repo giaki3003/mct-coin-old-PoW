@@ -1284,6 +1284,7 @@ NOTE:   unlike bitcoin we are using PREVIOUS block height here,
 */
 CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, bool fSuperblockPartOnly)
 {
+/*
   int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
     // Force block reward to zero when right shift is undefined.
     if (halvings >= 35)
@@ -1319,6 +1320,25 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
     */
+  int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
+    // Force block reward to zero when right shift is undefined.
+    if (halvings >= 35)
+        return 0;
+
+          if (nHeight == 1)
+              return 1500000 * COIN;             
+
+
+    // LogPrintf("height %u diff %4.2f reward %d\n", nPrevHeight, dDiff, nSubsidyBase);
+      CAmount nSubsidy = 50 * COIN;
+
+      // Subsidy is cut in half every 865000 blocks which will occur approximately every 3 years.
+    nSubsidy >>= halvings;
+
+    // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
+    CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
+
+    return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
 }
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
