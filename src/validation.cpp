@@ -1290,29 +1290,30 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
         return 0;
 
         if (nHeight == 1) {
-            CAmount nSubsidy = 1500000 * COIN;
+            nSubsidy = 1500000 * COIN;
         }
         else if (nHeight <= 210000 && nHeight >= 1) {
-            CAmount nSubsidy = 50 * COIN;
+            nSubsidy = 50 * COIN;
         }
         else if (nHeight <= 258195 && nHeight > 210000) {
-            CAmount nSubsidy = 25 * COIN;
+            nSubsidy = 25 * COIN;
         }
         else if (nHeight > 258195 && nHeight <= 348201) {
-            CAmount nSubsidy = 8 * COIN;
+            nSubsidy = 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
-            CAmount nSubsidy = 4 * COIN;
+            nSubsidy = 4 * COIN;
         }
         else if (nHeight <= 600202 && nHeight > 456202) {
-            CAmount nSubsidy = 2 * COIN;
+            nSubsidy = 2 * COIN;
         }
         else if (nHeight <= 765828 && nHeight > 600203) {
-            CAmount nSubsidy = 1 * COIN;
+            nSubsidy = 1 * COIN;
         }
         else {
-            CAmount nSubsidy = 0 * COIN;            
+            nSubsidy = 0 * COIN;            
         }
+    return CAmount nSubsidy;
 
     /* Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
     CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
