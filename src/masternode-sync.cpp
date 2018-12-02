@@ -481,7 +481,7 @@ void CMasternodeSync::UpdatedBlockTip(const CBlockIndex *pindexNew, bool fInitia
                 pindexNew->nHeight, pindexBestHeader->nHeight, fInitialDownload, fReachedBestHeader);
 
     if (!IsBlockchainSynced() && fReachedBestHeader) {
-        if (5==5) {
+        if (fLiteMode) {
             // nothing to do in lite mode, just finish the process immediately
             nRequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
             return;
