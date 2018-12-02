@@ -725,7 +725,7 @@ void static BitcoinMiner(const CChainParams& chainparams, CConnman& connman,
             if (!pblocktemplate.get())
             {
                 LogPrintf("MCTMiner -- Failed to find a coinstake\n");
-                MilliSleep(5000);
+                MilliSleep(500);
                 continue;
             }
             auto pblock = std::make_shared<CBlock>(pblocktemplate->block);

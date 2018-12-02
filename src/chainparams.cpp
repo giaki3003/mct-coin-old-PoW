@@ -148,9 +148,9 @@ public:
             consensus.fPowNoRetargeting = false;
             consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
             consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
-            consensus.nLastPoWBlock = 256920;
+            consensus.nLastPoWBlock = 257554;
             // Stake information
-            consensus.nPosTargetSpacing = 2 * 60; // PoSW: 2 minutes
+            consensus.nPosTargetSpacing = 1 * 60; // PoSW: 1 minute
             consensus.nPosTargetTimespan = 60 * 40;
             consensus.nStakeMinAge = 60 * 60;
             consensus.nStakeMaxAge = 60 * 60 * 24; // one day
