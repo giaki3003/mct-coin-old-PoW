@@ -1314,10 +1314,11 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
             CAmount nSubsidy = 0 * COIN;            
         }
 
-    // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
+    /* Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
     CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
+    */
 }
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
