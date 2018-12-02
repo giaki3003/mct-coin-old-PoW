@@ -1290,29 +1290,28 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
         return 0;
 
         if (nHeight == 1) {
-            return 1500000 * COIN;
+            CAmount nSubsidy = 1500000 * COIN;
         }
-        else if (nHeight > 257999 && nHeight <= 348201) {
-            return 8 * COIN;
+        else if (nHeight <= 258195 && nHeight >= 1) {
+            CAmount nSubsidy = 50 * COIN;
+
+            CAmount nSubsidy >>= halvings;
+        }
+        else if (nHeight > 258195 && nHeight <= 348201) {
+            CAmount nSubsidy = 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
-            return 4 * COIN;
+            CAmount nSubsidy = 4 * COIN;
         }
         else if (nHeight <= 600202 && nHeight > 456202) {
-            return 2 * COIN;
+            CAmount nSubsidy = 2 * COIN;
         }
         else if (nHeight <= 765828 && nHeight > 600203) {
-            return 1 * COIN;
+            CAmount nSubsidy = 1 * COIN;
         }
-        else if (nHeight > 765828) {
-            return 0 * COIN;            
+        else {
+            CAmount nSubsidy = 0 * COIN;            
         }
-
-    // LogPrintf("height %u diff %4.2f reward %d\n", nPrevHeight, dDiff, nSubsidyBase);
-      CAmount nSubsidy = 50 * COIN;
-
-      // Subsidy is cut in half every 865000 blocks which will occur approximately every 3 years.
-    nSubsidy >>= halvings;
 
     // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
     CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
@@ -1322,7 +1321,10 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
+    if (nHeight >= 258195) {
+        return 0; // PoS phase has no MNs
+    }
+    else return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
 }
 
 bool IsInitialBlockDownload()

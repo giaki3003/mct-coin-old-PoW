@@ -116,7 +116,7 @@ CMasternode::CollateralStatus CMasternode::CheckCollateral(const COutPoint& outp
         return COLLATERAL_UTXO_NOT_FOUND;
     }
 
-    if(chainActive.Height() >= 257999) {
+    if(chainActive.Height() >= 258195) {
     if(coin.out.nValue != 15000000 * COIN) {
         return COLLATERAL_INVALID_AMOUNT;
     }

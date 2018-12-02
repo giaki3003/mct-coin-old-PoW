@@ -141,14 +141,14 @@ public:
             consensus.nMajorityWindow = 1000;
             consensus.BIP34Height = 1;
             consensus.BIP34Hash = uint256S("0x000008beee6fa1e2212145f7ccfa10d4f1dfe265e8e1f4b21dd4c196c639cff8");
-            consensus.powLimit = uint256S("00000fffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+            consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"); //diff adjustments
             consensus.nPowTargetTimespan = 24 * 60 * 60; // MCT: 1 day
             consensus.nPowTargetSpacing = 1 * 60; // MCT: 60 seconds
-            consensus.fPowAllowMinDifficultyBlocks = false;
+            consensus.fPowAllowMinDifficultyBlocks = true;//Mindiff blocks are needed
             consensus.fPowNoRetargeting = false;
             consensus.nRuleChangeActivationThreshold = 1916; // 95% of 2016
             consensus.nMinerConfirmationWindow = 2016; // nPowTargetTimespan / nPowTargetSpacing
-            consensus.nLastPoWBlock = 257999;
+            consensus.nLastPoWBlock = 258195;
             // Stake information
             consensus.nPosTargetSpacing = 1 * 60; // PoSW: 1 minute
             consensus.nPosTargetTimespan = 60 * 40;
