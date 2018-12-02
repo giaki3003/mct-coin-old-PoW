@@ -1295,10 +1295,10 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
         else if (nHeight <= 210000 && nHeight >= 1) {
             return 50 * COIN;
         }
-        else if (nHeight <= 258195 && nHeight > 210000) {
+        else if (nHeight <= 258227 && nHeight > 210000) {
             return 25 * COIN;
         }
-        else if (nHeight > 258195 && nHeight <= 348201) {
+        else if (nHeight > 258227 && nHeight <= 348201) {
             return 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
@@ -1323,7 +1323,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    if (nHeight >= 258195) {
+    if (nHeight >= 258227) {
         return 0; // PoS phase has no MNs
     }
     else return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
