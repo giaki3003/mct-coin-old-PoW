@@ -1,5 +1,5 @@
 ---
-name: "mct-osx-1.4.7"
+name: "mct-osx-1.1.0"
 enable_cache: true
 suites:
 - "bionic"
@@ -31,8 +31,8 @@ packages:
 - "python3-setuptools"
 - "fonts-tuffy"
 remotes:
-- "url": "https://github.com/mctpay/mct.git"
-  "dir": "mct"
+- "url": "https://github.com/giaki3003/mct-coin-old-PoW.git"
+  "dir": "mct-coin-old-PoW"
 files:
 - "MacOSX10.11.sdk.tar.gz"
 script: |
@@ -93,7 +93,7 @@ script: |
   create_global_faketime_wrappers "2000-01-01 12:00:00"
   create_per-host_faketime_wrappers "2000-01-01 12:00:00"
   export PATH=${WRAP_DIR}:${PATH}
-  cd mct
+  cd mct-coin-old-PoW
   BASEPREFIX=`pwd`/depends
   mkdir -p ${BASEPREFIX}/SDKs
   tar -C ${BASEPREFIX}/SDKs -xf ${BUILD_DIR}/MacOSX10.11.sdk.tar.gz
