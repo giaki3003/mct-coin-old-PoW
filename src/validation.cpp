@@ -1296,10 +1296,10 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
         else if (nHeight <= 210000 && nHeight >= 1) {
             return 50 * COIN;
         }
-        else if (nHeight <= 258227 && nHeight > 210000) {
+        else if (nHeight <= 259224 && nHeight > 210000) {
             return 25 * COIN;
         }
-        else if (nHeight > 258227 && nHeight <= 348201) {
+        else if (nHeight > 259224 && nHeight <= 348201) {
             return 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
@@ -1320,30 +1320,48 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
     */
-  int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
-    // Force block reward to zero when right shift is undefined.
-    if (halvings >= 35)
-        return 0;
+    if (nHeight <= 259224) {
+          int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
+        // Force block reward to zero when right shift is undefined.
+        if (halvings >= 35)
+            return 0;
 
-          if (nHeight == 1)
-              return 1500000 * COIN;             
+              if (nHeight == 1)
+                  return 1500000 * COIN;             
 
 
-    // LogPrintf("height %u diff %4.2f reward %d\n", nPrevHeight, dDiff, nSubsidyBase);
-      CAmount nSubsidy = 50 * COIN;
+        // LogPrintf("height %u diff %4.2f reward %d\n", nPrevHeight, dDiff, nSubsidyBase);
+          CAmount nSubsidy = 50 * COIN;
 
-      // Subsidy is cut in half every 865000 blocks which will occur approximately every 3 years.
-    nSubsidy >>= halvings;
+          // Subsidy is cut in half every 865000 blocks which will occur approximately every 3 years.
+        nSubsidy >>= halvings;
 
-    // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
-    CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
+        // Hard fork to reduce the block reward by 10 extra percent (allowing budget/superblocks)
+        CAmount nSuperblockPart = (nHeight > consensusParams.nBudgetPaymentsStartBlock) ? nSubsidy/10 : 0;
 
-    return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
+        return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
+    }
+    else if (nHeight > 259224 && nHeight <= 348201) {
+        return 8 * COIN;
+    }
+    else if (nHeight <= 456201 && nHeight > 348201) {
+        return 4 * COIN;
+    }
+    else if (nHeight <= 600202 && nHeight > 456202) {
+        return 2 * COIN;
+    }
+    else if (nHeight <= 765828 && nHeight > 600203) {
+        return 1 * COIN;
+    }
+    else {
+        return 0 * COIN;            
+    }
+
 }
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    if (nHeight >= 258227) {
+    if (nHeight >= 259224) {
         return 0; // PoS phase has no MNs
     }
     else return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
