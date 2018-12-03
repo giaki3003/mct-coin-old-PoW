@@ -184,11 +184,24 @@ void CMasternodeSync::ProcessTick(CConnman& connman)
         // QUICK MODE (REGTEST ONLY!)
         if(5==5) //We'll be trying this to end MNSync quickly
         {
-            nRequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
-        }
-        nRequestedMasternodeAttempt++;
-        connman.ReleaseNodeVector(vNodesCopy);
-        return;
+            if(nRequestedMasternodeAttempt <= 2) {
+                connman.PushMessage(pnode, msgMaker.Make(NetMsgType::GETSPORKS)); //get current network sporks
+            } else if(nRequestedMasternodeAttempt < 4) {
+                mnodeman.DsegUpdate(pnode, connman);
+            } else if(nRequestedMasternodeAttempt < 6) {
+                //sync payment votes
+                if(pnode->nVersion == 70208) {
+                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC, mnpayments.GetStorageLimit())); //sync payment votes
+                } else {
+                    connman.PushMessage(pnode, msgMaker.Make(NetMsgType::MASTERNODEPAYMENTSYNC)); //sync payment votes
+                }
+                SendGovernanceSyncRequest(pnode, connman);
+            } else {
+                nRequestedMasternodeAssets = MASTERNODE_SYNC_FINISHED;
+            }
+            nRequestedMasternodeAttempt++;
+            connman.ReleaseNodeVector(vNodesCopy);
+            return;
         }
 
         // NORMAL NETWORK MODE - TESTNET/MAINNET
