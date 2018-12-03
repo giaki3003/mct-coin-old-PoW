@@ -22,7 +22,7 @@ QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
     unitlist.append(MCT);
     unitlist.append(mMCT);
     unitlist.append(uMCT);
-    unitlist.append(politoshis);
+    unitlist.append(mctoshis);
     return unitlist;
 }
 
@@ -33,7 +33,7 @@ bool BitcoinUnits::valid(int unit)
     case MCT:
     case mMCT:
     case uMCT:
-    case politoshis:
+    case mctoshis:
         return true;
     default:
         return false;
@@ -49,7 +49,7 @@ QString BitcoinUnits::name(int unit)
             case MCT: return QString("MCT");
             case mMCT: return QString("mMCT");
             case uMCT: return QString::fromUtf8("μMCT");
-            case politoshis: return QString("politoshis");
+            case mctoshis: return QString("mctoshis");
             default: return QString("???");
         }
     }
@@ -60,7 +60,7 @@ QString BitcoinUnits::name(int unit)
             case MCT: return QString("tMCT");
             case mMCT: return QString("mtMCT");
             case uMCT: return QString::fromUtf8("μtMCT");
-            case politoshis: return QString("tpolitoshis");
+            case mctoshis: return QString("tmctoshis");
             default: return QString("???");
         }
     }
@@ -75,7 +75,7 @@ QString BitcoinUnits::description(int unit)
             case MCT: return QString("MCT");
             case mMCT: return QString("Milli-MCT (1 / 1" THIN_SP_UTF8 "000)");
             case uMCT: return QString("Micro-MCT (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case politoshis: return QString("Ten Nano-MCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case mctoshis: return QString("Ten Nano-MCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -86,7 +86,7 @@ QString BitcoinUnits::description(int unit)
             case MCT: return QString("TestMCTs");
             case mMCT: return QString("Milli-TestMCT (1 / 1" THIN_SP_UTF8 "000)");
             case uMCT: return QString("Micro-TestMCT (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case politoshis: return QString("Ten Nano-TestMCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case mctoshis: return QString("Ten Nano-TestMCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -99,7 +99,7 @@ qint64 BitcoinUnits::factor(int unit)
     case MCT:  return 100000000;
     case mMCT: return 100000;
     case uMCT: return 100;
-    case politoshis: return 1;
+    case mctoshis: return 1;
     default:   return 100000000;
     }
 }
@@ -111,7 +111,7 @@ int BitcoinUnits::decimals(int unit)
     case MCT: return 8;
     case mMCT: return 5;
     case uMCT: return 2;
-    case politoshis: return 0;
+    case mctoshis: return 0;
     default: return 0;
     }
 }

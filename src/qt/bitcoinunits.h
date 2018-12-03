@@ -60,7 +60,7 @@ public:
         MCT,
         mMCT,
         uMCT,
-        politoshis
+        mctoshis
     };
 
     enum SeparatorStyle
