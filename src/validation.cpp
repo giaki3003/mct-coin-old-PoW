@@ -1296,10 +1296,10 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
         else if (nHeight <= 210000 && nHeight >= 1) {
             return 50 * COIN;
         }
-        else if (nHeight <= 259224 && nHeight > 210000) {
+        else if (nHeight <= 259251 && nHeight > 210000) {
             return 25 * COIN;
         }
-        else if (nHeight > 259224 && nHeight <= 348201) {
+        else if (nHeight > 259251 && nHeight <= 348201) {
             return 8 * COIN;
         }
         else if (nHeight <= 456201 && nHeight > 348201) {
@@ -1320,7 +1320,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
     return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
     */
-    if (nHeight <= 259224) {
+    if (nHeight <= 259251) {
           int halvings = nHeight / consensusParams.nSubsidyHalvingInterval;
         // Force block reward to zero when right shift is undefined.
         if (halvings >= 35)
@@ -1341,7 +1341,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
         return fSuperblockPartOnly ? nSuperblockPart : nSubsidy - nSuperblockPart;
     }
-    else if (nHeight > 259224 && nHeight <= 348201) {
+    else if (nHeight > 259251 && nHeight <= 348201) {
         return 8 * COIN;
     }
     else if (nHeight <= 456201 && nHeight > 348201) {
@@ -1361,7 +1361,7 @@ CAmount GetBlockSubsidy(int nHeight, const Consensus::Params& consensusParams, b
 
 CAmount GetMasternodePayment(int nHeight, CAmount blockValue)
 {
-    if (nHeight >= 259224) {
+    if (nHeight >= 259251) {
         return 0; // PoS phase has no MNs
     }
     else return blockValue/2; // Miner/Staker: 25 MCT | Masternodes: 25 MCT)
