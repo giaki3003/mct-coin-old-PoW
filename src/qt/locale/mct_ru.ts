@@ -814,8 +814,8 @@
         <translation>Эта метка становится красной, если какой-либо из адресатов получает сумму меньше, чем "пыль".</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 mctoshi(s) per input.</source>
-        <translation>Может отличаться на +/- %1 mctoshi(ов) на каждый вход.</translation>
+        <source>Can vary +/- %1 mctposhi(s) per input.</source>
+        <translation>Может отличаться на +/- %1 mctposhi(ов) на каждый вход.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2808,12 +2808,12 @@ https://www.transifex.com/projects/p/mct/</translation>
         <translation>InstantSend</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 mctoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctoshis in fee,&lt;br /&gt;while "at least" pays 1000 mctoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Если ручная комиссия  установлена в 1000 mctoshi, а транзакция по размеру только 250 байт, то плата "за килобайт" составит лишь 250 mctoshi,&lt;br&gt;в то время как "минимум" будет равна 1000 mctoshi. Для транзакций больше килобайта в любом случае идет расчет "за килобайт".</translation>
+        <source>If the custom fee is set to 1000 mctposhis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctposhis in fee,&lt;br /&gt;while "at least" pays 1000 mctposhis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Если ручная комиссия  установлена в 1000 mctposhi, а транзакция по размеру только 250 байт, то плата "за килобайт" составит лишь 250 mctposhi,&lt;br&gt;в то время как "минимум" будет равна 1000 mctposhi. Для транзакций больше килобайта в любом случае идет расчет "за килобайт".</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 mctoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctoshis in fee,&lt;br /&gt;while "total at least" pays 1000 mctoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Если ручная комиссия  установлена в 1000 mctoshi, а транзакция по размеру только 250 байт, то плата "за килобайт" составит лишь 250 mctoshi,&lt;br&gt;в то время как "итого минимум" будет равна 1000 mctoshi. Для тразакций больше килобайта в любом случае идет расчет "за килобайт".</translation>
+        <source>If the custom fee is set to 1000 mctposhis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctposhis in fee,&lt;br /&gt;while "total at least" pays 1000 mctposhis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Если ручная комиссия  установлена в 1000 mctposhi, а транзакция по размеру только 250 байт, то плата "за килобайт" составит лишь 250 mctposhi,&lt;br&gt;в то время как "итого минимум" будет равна 1000 mctposhi. Для тразакций больше килобайта в любом случае идет расчет "за килобайт".</translation>
     </message>
     <message>
         <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for mct transactions than the network can process.</source>

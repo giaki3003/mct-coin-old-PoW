@@ -757,8 +757,8 @@ Endereço: %4
         <translation>média-alta</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 mctoshi(s) per input.</source>
-        <translation>Pode variar +/- %1 mctoshi(s) por input</translation>
+        <source>Can vary +/- %1 mctposhi(s) per input.</source>
+        <translation>Pode variar +/- %1 mctposhi(s) por input</translation>
     </message>
     <message>
         <source>n/a</source>

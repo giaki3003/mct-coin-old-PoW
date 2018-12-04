@@ -814,8 +814,8 @@
         <translation>Diese Bezeichnung wird rot, wenn ein Empfänger einen Betrag kleiner als die gegenwärtige Schwelle für Dust erhält.</translation>
     </message>
     <message>
-        <source>Can vary +/- %1 mctoshi(s) per input.</source>
-        <translation>Kann um +/- %1 mctoshi(s) pro Eingabe variieren.</translation>
+        <source>Can vary +/- %1 mctposhi(s) per input.</source>
+        <translation>Kann um +/- %1 mctposhi(s) pro Eingabe variieren.</translation>
     </message>
     <message>
         <source>(no label)</source>
@@ -2810,12 +2810,12 @@ https://www.transifex.com/projects/p/mct/</translation>
         <translation>InstantSend</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 mctoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctoshis in fee,&lt;br /&gt;while "at least" pays 1000 mctoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Wenn die benutzerdefinierten Gebühren auf 1000 mctoshis gesetzt sind und eine Transaktion hat nur 250 Bytes, dann kostet "pro Kilobyte" nur 250 mctoshis Gebühren,&lt;br/&gt; während "mindestens" 1000 mctoshis kostet. Transaktionen größer als 1 Kilobyte werden immer pro Kilobyte bezahlt.</translation>
+        <source>If the custom fee is set to 1000 mctposhis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctposhis in fee,&lt;br /&gt;while "at least" pays 1000 mctposhis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Wenn die benutzerdefinierten Gebühren auf 1000 mctposhis gesetzt sind und eine Transaktion hat nur 250 Bytes, dann kostet "pro Kilobyte" nur 250 mctposhis Gebühren,&lt;br/&gt; während "mindestens" 1000 mctposhis kostet. Transaktionen größer als 1 Kilobyte werden immer pro Kilobyte bezahlt.</translation>
     </message>
     <message>
-        <source>If the custom fee is set to 1000 mctoshis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctoshis in fee,&lt;br /&gt;while "total at least" pays 1000 mctoshis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
-        <translation>Wenn die benutzerdefinierten Gebühren auf 1000 mctoshis gesetzt sind und eine Transaktion hat nur 250 Bytes, dann kostet "pro Kilobyte" nur 250 mctoshis Gebühren, während "mindestens" 1000 mctoshis kostet. Transaktionen größer als 1 Kilobyte werden immer pro Kilobyte bezahlt.</translation>
+        <source>If the custom fee is set to 1000 mctposhis and the transaction is only 250 bytes, then "per kilobyte" only pays 250 mctposhis in fee,&lt;br /&gt;while "total at least" pays 1000 mctposhis. For transactions bigger than a kilobyte both pay by kilobyte.</source>
+        <translation>Wenn die benutzerdefinierten Gebühren auf 1000 mctposhis gesetzt sind und eine Transaktion hat nur 250 Bytes, dann kostet "pro Kilobyte" nur 250 mctposhis Gebühren, während "mindestens" 1000 mctposhis kostet. Transaktionen größer als 1 Kilobyte werden immer pro Kilobyte bezahlt.</translation>
     </message>
     <message>
         <source>Paying only the minimum fee is just fine as long as there is less transaction volume than space in the blocks.&lt;br /&gt;But be aware that this can end up in a never confirming transaction once there is more demand for mct transactions than the network can process.</source>

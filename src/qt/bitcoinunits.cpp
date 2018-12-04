@@ -1,5 +1,5 @@
 // Copyright (c) 2011-2015 The Bitcoin Core developers
-// Copyright (c) 2014-2017 The MCT Core developers
+// Copyright (c) 2014-2017 The MCTP Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,10 +19,10 @@ BitcoinUnits::BitcoinUnits(QObject *parent):
 QList<BitcoinUnits::Unit> BitcoinUnits::availableUnits()
 {
     QList<BitcoinUnits::Unit> unitlist;
-    unitlist.append(MCT);
-    unitlist.append(mMCT);
-    unitlist.append(uMCT);
-    unitlist.append(mctoshis);
+    unitlist.append(MCTP);
+    unitlist.append(mMCTP);
+    unitlist.append(uMCTP);
+    unitlist.append(mctposhis);
     return unitlist;
 }
 
@@ -30,10 +30,10 @@ bool BitcoinUnits::valid(int unit)
 {
     switch(unit)
     {
-    case MCT:
-    case mMCT:
-    case uMCT:
-    case mctoshis:
+    case MCTP:
+    case mMCTP:
+    case uMCTP:
+    case mctposhis:
         return true;
     default:
         return false;
@@ -46,10 +46,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case MCT: return QString("MCT");
-            case mMCT: return QString("mMCT");
-            case uMCT: return QString::fromUtf8("μMCT");
-            case mctoshis: return QString("mctoshis");
+            case MCTP: return QString("MCTP");
+            case mMCTP: return QString("mMCTP");
+            case uMCTP: return QString::fromUtf8("μMCTP");
+            case mctposhis: return QString("mctposhis");
             default: return QString("???");
         }
     }
@@ -57,10 +57,10 @@ QString BitcoinUnits::name(int unit)
     {
         switch(unit)
         {
-            case MCT: return QString("tMCT");
-            case mMCT: return QString("mtMCT");
-            case uMCT: return QString::fromUtf8("μtMCT");
-            case mctoshis: return QString("tmctoshis");
+            case MCTP: return QString("tMCTP");
+            case mMCTP: return QString("mtMCTP");
+            case uMCTP: return QString::fromUtf8("μtMCTP");
+            case mctposhis: return QString("tmctposhis");
             default: return QString("???");
         }
     }
@@ -72,10 +72,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case MCT: return QString("MCT");
-            case mMCT: return QString("Milli-MCT (1 / 1" THIN_SP_UTF8 "000)");
-            case uMCT: return QString("Micro-MCT (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case mctoshis: return QString("Ten Nano-MCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case MCTP: return QString("MCTP");
+            case mMCTP: return QString("Milli-MCTP (1 / 1" THIN_SP_UTF8 "000)");
+            case uMCTP: return QString("Micro-MCTP (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case mctposhis: return QString("Ten Nano-MCTP (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -83,10 +83,10 @@ QString BitcoinUnits::description(int unit)
     {
         switch(unit)
         {
-            case MCT: return QString("TestMCTs");
-            case mMCT: return QString("Milli-TestMCT (1 / 1" THIN_SP_UTF8 "000)");
-            case uMCT: return QString("Micro-TestMCT (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
-            case mctoshis: return QString("Ten Nano-TestMCT (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case MCTP: return QString("TestMCTPs");
+            case mMCTP: return QString("Milli-TestMCTP (1 / 1" THIN_SP_UTF8 "000)");
+            case uMCTP: return QString("Micro-TestMCTP (1 / 1" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
+            case mctposhis: return QString("Ten Nano-TestMCTP (1 / 100" THIN_SP_UTF8 "000" THIN_SP_UTF8 "000)");
             default: return QString("???");
         }
     }
@@ -96,10 +96,10 @@ qint64 BitcoinUnits::factor(int unit)
 {
     switch(unit)
     {
-    case MCT:  return 100000000;
-    case mMCT: return 100000;
-    case uMCT: return 100;
-    case mctoshis: return 1;
+    case MCTP:  return 100000000;
+    case mMCTP: return 100000;
+    case uMCTP: return 100;
+    case mctposhis: return 1;
     default:   return 100000000;
     }
 }
@@ -108,10 +108,10 @@ int BitcoinUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case MCT: return 8;
-    case mMCT: return 5;
-    case uMCT: return 2;
-    case mctoshis: return 0;
+    case MCTP: return 8;
+    case mMCTP: return 5;
+    case uMCTP: return 2;
+    case mctposhis: return 0;
     default: return 0;
     }
 }
