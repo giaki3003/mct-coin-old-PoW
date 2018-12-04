@@ -77,7 +77,7 @@ void OptionsModel::Init(bool resetSettings)
 
     // Display
     if (!settings.contains("nDisplayUnit"))
-        settings.setValue("nDisplayUnit", Bitcoinunits::MCTP);
+        settings.setValue("nDisplayUnit", BitcoinUnits::MCTP);
     nDisplayUnit = settings.value("nDisplayUnit").toInt();
 
     if (!settings.contains("strThirdPartyTxUrls"))
