@@ -614,7 +614,7 @@ void CoinControlDialog::updateLabels(WalletModel *model, QDialog* dialog)
     }
 
     // actually update labels
-    int nDisplayUnit = Bitcoinunits::MCTPP;
+    int nDisplayUnit = Bitcoinunits::MCTP;
     if (model && model->getOptionsModel())
         nDisplayUnit = model->getOptionsModel()->getDisplayUnit();
 
