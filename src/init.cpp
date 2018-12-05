@@ -609,8 +609,8 @@ std::string HelpMessage(HelpMessageMode mode)
 
 std::string LicenseInfo()
 {
-    const std::string URL_SOURCE_CODE = "<https://github.com/mctpay/mct>";
-    const std::string URL_WEBSITE = "<https://mctpay.org>";
+    const std::string URL_SOURCE_CODE = "<https://github.com/giaki3003/mct-coin-old-PoW>";
+    const std::string URL_WEBSITE = "<https://mct.plus>";
 
     return CopyrightHolders(_("Copyright (C)"), 2014, COPYRIGHT_YEAR) + "\n" +
            "\n" +
