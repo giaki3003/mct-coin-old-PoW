@@ -358,8 +358,8 @@
     </message>
     <message>
         <location line="+1"/>
-        <source>Request payments (generates QR codes and mct: URIs)</source>
-        <translation>Request payments (generates QR codes and mct: URIs)</translation>
+        <source>Request payments (generates QR codes and mctp: URIs)</source>
+        <translation>Request payments (generates QR codes and mctp: URIs)</translation>
     </message>
     <message>
         <location line="+14"/>
