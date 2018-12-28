@@ -1,2 +1,2 @@
-#!/usr/bin/python
-exeext=""
+#!/usr/bin/env python
+exeext=".exe"
